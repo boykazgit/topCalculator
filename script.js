@@ -1,3 +1,8 @@
+//initialize variables
+let number2 = '';
+let number1 = '';
+let operator = '';
+
 // functions for operators
 function add(num1, num2) {
   return num1 + num2;
