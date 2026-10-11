@@ -49,6 +49,11 @@ function operate() {
 
 function updateNumberDisplay(event) {
   //update number 1 only when userNumber 1 is not already assigned
+  if (numbersDisplay.textContent.length > 15) {
+    alert('Maximum numbers of digits reached(15)');
+    return;
+  }
+
   if(userNumber1 === '') {
     if(eqlButnOperate === 1) {
       eqlButnOperate = 0;
