@@ -1,11 +1,12 @@
 * {
   font-family: Arial, Helvetica, sans-serif;
+  color: white;
 }
 
 body {
   display: flex;
   justify-content: center;
-  background: #B3B3B3;
+  background:rgb(117, 117, 117);
   margin: 50px; 
 }
 
@@ -16,6 +17,7 @@ button {
   border-radius: 10px;
   border: none;
   font-size: 16px;
+  background: rgb(117, 117, 117);
 }
 
 .calculator-body {
@@ -42,7 +44,7 @@ button {
   justify-content: space-between;
   align-items: end;
   flex-wrap: wrap;
-  background: rgb(175, 250, 175);
+  background: rgb(155, 219, 155);
   font-size: 24px;
 }
 
@@ -53,6 +55,10 @@ button {
 }
 
 #\= {
-  background: rgb(175, 250, 175);
+  background: rgb(155, 219, 155);
   width: 102px;
+}
+
+#backspace {
+  background: rgb(241, 146, 116);
 }
