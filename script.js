@@ -7,7 +7,7 @@ let userNumber2 = '';
 let tempNum = document.createTextNode('');
 let tempOpr = '';
 let oprOperate = 0; // keep track of whether the operator was used to operate instead of the equal button
-let eqlButnOperate = 0;
+let eqlButnOperate = 0; // to keep track of whether there has been an operation performed using the equal button
 
 const numbersContainer = document.querySelector('.numbers-container');
 const operatorsContainer = document.querySelector('.operators-container');
@@ -18,7 +18,7 @@ const operatorDisplay = document.querySelector('.operator-display');
 const equalButton = document.querySelector('#\\=');
 const clearButton = document.querySelector('#clear');
 
-// functions for operators
+// functions for operations
 function add(num1, num2) {
   return +num1 + +num2;
 }
@@ -60,17 +60,18 @@ function updateNumberDisplay(event) {
   } else {
     if (oprOperate === 1) {
       numbersDisplay.textContent = '';
+      oprOperate = 0;
     }
-
     number2 = event.target.id;
     tempNum.textContent = number2;
     numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
   }
+
 }
 
 function updateOperator(event) {
   if (!(event.target.id === '=' || event.target.id === 'clear')) {
-    // for when consecutive operators are cliced the last one clicked should be used
+    // for when consecutive operators are clicked the last one clicked should be used
     if (numbersDisplay.textContent === '') {
       operator = event.target.id;
       if (event.target.id === '*') {
@@ -82,20 +83,26 @@ function updateOperator(event) {
     }
     
     // operate when both userNumber1 is available and an operator is clicked on 
-    // the selected operator will be used to operate on the result(userNumber1) and the number the user entered (userNumber 2)
+    // the selected operator will be used to operate on the result(userNumber1) and the number the user entered (userNumber2)
     if(userNumber1 !== '' && operator !== '') {
-      tempOpr = event.target.id;
-      userNumber2 = numbersDisplay.textContent;
-      numbersDisplay.textContent = '';
-      operatorDisplay.textContent = '';
-      result = operate();
-      userNumber1 = result;
-      userNumber2 = '';
-      operator = tempOpr;
-      oprOperate = 1;
-      // tempNum.textContent = result;
-      numbersDisplay.textContent = result;
-      return
+      //this is to change the operator that would be used to operate after an oprOperation when the user enters an operator instead of a number
+      if (oprOperate === 1) {
+        operator = event.target.id;
+        return;
+      } else {
+        tempOpr = event.target.id;
+        userNumber2 = numbersDisplay.textContent;
+        numbersDisplay.textContent = '';
+        operatorDisplay.textContent = '';
+        result = operate();
+        userNumber1 = result;
+        userNumber2 = '';
+        operator = tempOpr;
+        oprOperate = 1;
+        // tempNum.textContent = result;
+        numbersDisplay.textContent = result;
+        return
+      }
     }
 
     //default behaviour
@@ -112,6 +119,12 @@ function updateOperator(event) {
 
 function startOperate() {
   if (userNumber1 !== '' && numbersDisplay.textContent !== '' && operator !== '') {
+    // don't operate after an oprOperation
+    // this is because after an oprOperation the user needs to enter a number to operate on using the result from oprOperate as userNumber1 and the operator
+    //when startOperate operates after an oprOperate it assigns the number on the numberDisplay as userNumber2 which shouldn't happen
+    if (oprOperate === 1) {
+      return;
+    }
       userNumber2 = numbersDisplay.textContent;
       numbersDisplay.textContent = '';
       operatorDisplay.textContent = '';
@@ -133,6 +146,8 @@ function clear() {
   userNumber2 = '';
   numbersDisplay.textContent = '';
   operatorDisplay.textContent = '';
+  oprOperate = 0;
+  eqlButnOperate = 0;
 }
 
 numbersContainer.addEventListener('click', updateNumberDisplay);
