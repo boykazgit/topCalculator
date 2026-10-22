@@ -49,34 +49,35 @@ function operate() {
 }
 
 function updateNumberDisplay(event) {
-  if (event.target.id === 'none' || event.target.id === '.') {
-    null
-  } else {
     //update number 1 only when userNumber 1 is not already assigned
     if (numbersDisplay.textContent.length > 15) {
       alert('Maximum numbers of digits reached(15)');
       return;
     }
   
-    if(userNumber1 === '') {
-      if(eqlButnOperate === 1) {
-        eqlButnOperate = 0;
-        numbersDisplay.textContent = '';
-      }
-      number1 = event.target.id;
-      tempNum.textContent = number1;
-      numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+    // Don't include multiple decimals in a number
+    if (event.target.id === '.' && numbersDisplay.textContent.includes('.')) {
+      return
     } else {
-      if (oprOperate === 1) {
-        numbersDisplay.textContent = '';
-        oprOperate = 0;
+      if(userNumber1 === '') {
+        if(eqlButnOperate === 1) {
+          eqlButnOperate = 0;
+          numbersDisplay.textContent = '';
+        }
+        number1 = event.target.id;
+        tempNum.textContent = number1;
+        numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+      } else {
+        if (oprOperate === 1) {
+          numbersDisplay.textContent = '';
+          oprOperate = 0;
+        }
+        number2 = event.target.id;
+        tempNum.textContent = number2;
+        numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
       }
-      number2 = event.target.id;
-      tempNum.textContent = number2;
-      numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
     }
   }
-}
 
 function updateOperator(event) {
   if (!(event.target.id === '=' || event.target.id === 'clear' || event.target.id === 'backspace')) {
