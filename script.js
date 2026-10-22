@@ -81,48 +81,51 @@ function updateNumberDisplay(event) {
 
 function updateOperator(event) {
   if (!(event.target.id === '=' || event.target.id === 'clear' || event.target.id === 'backspace')) {
-    // for when consecutive operators are clicked the last one clicked should be used
-    if (numbersDisplay.textContent === '') {
+    //prevent a user from entering an operator with no number entered 
+    if (userNumber1 !== '' || numbersDisplay.textContent !== '' ){
+      // for when consecutive operators are clicked the last one clicked should be used
+      if (numbersDisplay.textContent === '') {
+        operator = event.target.id;
+        if (event.target.id === '*') {
+          operatorDisplay.textContent = 'x';
+        } else {
+          operatorDisplay.textContent = operator;
+        }
+        return;
+      }
+      
+      // operate when both userNumber1 and userNumber2 are available and an operator is clicked on 
+      // the selected operator will be used to operate on the result(userNumber1) and the number the user entered (userNumber2)
+      if(userNumber1 !== '' && operator !== '') {
+        //this is to change the operator that would be used to operate after an oprOperation when the user enters an operator instead of a number
+        if (oprOperate === 1) {
+          operator = event.target.id;
+          return;
+        } else {
+          tempOpr = event.target.id;
+          userNumber2 = numbersDisplay.textContent;
+          numbersDisplay.textContent = '';
+          operatorDisplay.textContent = '';
+          result = operate();
+          userNumber1 = result;
+          userNumber2 = '';
+          operator = tempOpr;
+          oprOperate = 1;
+          numbersDisplay.textContent = result;
+          return
+        }
+      }
+  
+      //default behaviour
+      userNumber1 = numbersDisplay.textContent;
+      numbersDisplay.textContent = '';
       operator = event.target.id;
       if (event.target.id === '*') {
         operatorDisplay.textContent = 'x';
       } else {
         operatorDisplay.textContent = operator;
       }
-      return;
-    }
-    
-    // operate when both userNumber1 is available and an operator is clicked on 
-    // the selected operator will be used to operate on the result(userNumber1) and the number the user entered (userNumber2)
-    if(userNumber1 !== '' && operator !== '') {
-      //this is to change the operator that would be used to operate after an oprOperation when the user enters an operator instead of a number
-      if (oprOperate === 1) {
-        operator = event.target.id;
-        return;
-      } else {
-        tempOpr = event.target.id;
-        userNumber2 = numbersDisplay.textContent;
-        numbersDisplay.textContent = '';
-        operatorDisplay.textContent = '';
-        result = operate();
-        userNumber1 = result;
-        userNumber2 = '';
-        operator = tempOpr;
-        oprOperate = 1;
-        numbersDisplay.textContent = result;
-        return
-      }
-    }
-
-    //default behaviour
-    userNumber1 = numbersDisplay.textContent;
-    numbersDisplay.textContent = '';
-    operator = event.target.id;
-    if (event.target.id === '*') {
-      operatorDisplay.textContent = 'x';
-    } else {
-      operatorDisplay.textContent = operator;
-    }
+    } 
   } 
 }
 
