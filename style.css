@@ -11,8 +11,8 @@ body {
 }
 
 button {
-  width: 70px;
-  height: 70px;
+  width: 60px;
+  height: 60px;
   border: none;
   margin: 5px 0px;
   border: 1px solid black;
@@ -33,7 +33,7 @@ button:active {
 
   background: white;
   height: 70%;
-  min-width: 400px;
+  min-width: 200px;
   padding: 8px;
   border-radius: 32px;
   
@@ -68,7 +68,7 @@ button:active {
 }
 
 #\= {
-  width: 140px;
+  width: 120px;
 }
 
 #backspace, #clear{
