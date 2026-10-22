@@ -17,6 +17,7 @@ const operatorDisplay = document.querySelector('.operator-display');
 // in this case, it needs to be escaped twice for js and then cs 
 const equalButton = document.querySelector('#\\=');
 const clearButton = document.querySelector('#clear');
+const backspaceButton = document.querySelector('#backspace');
 
 // functions for operations
 function add(num1, num2) {
@@ -48,34 +49,37 @@ function operate() {
 }
 
 function updateNumberDisplay(event) {
-  //update number 1 only when userNumber 1 is not already assigned
-  if (numbersDisplay.textContent.length > 15) {
-    alert('Maximum numbers of digits reached(15)');
-    return;
-  }
-
-  if(userNumber1 === '') {
-    if(eqlButnOperate === 1) {
-      eqlButnOperate = 0;
-      numbersDisplay.textContent = '';
-    }
-    number1 = event.target.id;
-    tempNum.textContent = number1;
-    numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+  if (event.target.id === 'none' || event.target.id === '.') {
+    null
   } else {
-    if (oprOperate === 1) {
-      numbersDisplay.textContent = '';
-      oprOperate = 0;
+    //update number 1 only when userNumber 1 is not already assigned
+    if (numbersDisplay.textContent.length > 15) {
+      alert('Maximum numbers of digits reached(15)');
+      return;
     }
-    number2 = event.target.id;
-    tempNum.textContent = number2;
-    numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+  
+    if(userNumber1 === '') {
+      if(eqlButnOperate === 1) {
+        eqlButnOperate = 0;
+        numbersDisplay.textContent = '';
+      }
+      number1 = event.target.id;
+      tempNum.textContent = number1;
+      numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+    } else {
+      if (oprOperate === 1) {
+        numbersDisplay.textContent = '';
+        oprOperate = 0;
+      }
+      number2 = event.target.id;
+      tempNum.textContent = number2;
+      numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
+    }
   }
-
 }
 
 function updateOperator(event) {
-  if (!(event.target.id === '=' || event.target.id === 'clear')) {
+  if (!(event.target.id === '=' || event.target.id === 'clear' || event.target.id === 'backspace')) {
     // for when consecutive operators are clicked the last one clicked should be used
     if (numbersDisplay.textContent === '') {
       operator = event.target.id;
@@ -104,7 +108,6 @@ function updateOperator(event) {
         userNumber2 = '';
         operator = tempOpr;
         oprOperate = 1;
-        // tempNum.textContent = result;
         numbersDisplay.textContent = result;
         return
       }
@@ -155,7 +158,14 @@ function clear() {
   eqlButnOperate = 0;
 }
 
+function backspace() {
+  if(numbersDisplay.textContent !== '') {
+    numbersDisplay.textContent = numbersDisplay.textContent.slice(0,-1);
+  }
+}
+
 numbersContainer.addEventListener('click', updateNumberDisplay);
 operatorsContainer.addEventListener('click', updateOperator);
 equalButton.addEventListener('click', startOperate);
 clearButton.addEventListener('click', clear);
+backspaceButton.addEventListener('click', backspace);
