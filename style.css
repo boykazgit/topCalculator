@@ -33,7 +33,7 @@ button:active {
 
   background: white;
   height: 70%;
-  min-width: 388px;
+  min-width: 330px;
   padding: 8px;
   border-radius: 32px;
   
@@ -51,7 +51,7 @@ button:active {
   background: none;
   border: 1px solid black;
   border-radius: 24px;
-  font-size: 32px;
+  font-size: 28px;
 }
 
 .buttons-container {
