@@ -9,6 +9,7 @@ let tempOpr = '';
 let oprOperate = 0; // keep track of whether the operator was used to operate instead of the equal button
 let eqlButnOperate = 0; // to keep track of whether there has been an operation performed using the equal button
 
+const body = document.querySelector('body');
 const numbersContainer = document.querySelector('.numbers-container');
 const operatorsContainer = document.querySelector('.operators-container');
 const numbersDisplay = document.querySelector('.numbers-display');
@@ -56,7 +57,7 @@ function updateNumberDisplay(event) {
     }
   
     // Don't include multiple decimals in a number
-    if (event.target.id === '.' && numbersDisplay.textContent.includes('.')) {
+    if ((event.key === '.' || event.target.id === '.') && numbersDisplay.textContent.includes('.')) {
       return
     } else {
       if(userNumber1 === '') {
@@ -64,7 +65,7 @@ function updateNumberDisplay(event) {
           eqlButnOperate = 0;
           numbersDisplay.textContent = '';
         }
-        number1 = event.target.id;
+        event.type === 'click' ? number1 = event.target.id : number1 = event.key;
         tempNum.textContent = number1;
         numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
       } else {
@@ -72,7 +73,7 @@ function updateNumberDisplay(event) {
           numbersDisplay.textContent = '';
           oprOperate = 0;
         }
-        number2 = event.target.id;
+        event.type === 'click' ? number2 = event.target.id : number2 = event.key;
         tempNum.textContent = number2;
         numbersDisplay.textContent = numbersDisplay.textContent + tempNum.textContent;
       }
@@ -85,8 +86,8 @@ function updateOperator(event) {
     if (userNumber1 !== '' || numbersDisplay.textContent !== '' ){
       // for when consecutive operators are clicked the last one clicked should be used
       if (numbersDisplay.textContent === '') {
-        operator = event.target.id;
-        if (event.target.id === '*') {
+        event.type === 'click' ? operator = event.target.id : operator = event.key;
+        if (event.target.id === '*' || event.key === '*') {
           operatorDisplay.textContent = 'x';
         } else {
           operatorDisplay.textContent = operator;
@@ -99,7 +100,7 @@ function updateOperator(event) {
       if(userNumber1 !== '' && operator !== '') {
         //this is to change the operator that would be used to operate after an oprOperation when the user enters an operator instead of a number
         if (oprOperate === 1) {
-          operator = event.target.id;
+          event.type === 'click' ? operator = event.target.id : operator = event.key;
           return;
         } else {
           tempOpr = event.target.id;
@@ -119,8 +120,8 @@ function updateOperator(event) {
       //default behaviour
       userNumber1 = numbersDisplay.textContent;
       numbersDisplay.textContent = '';
-      operator = event.target.id;
-      if (event.target.id === '*') {
+      event.type === 'click' ? operator = event.target.id : operator = event.key;
+      if (event.target.id === '*' || event.key === '*') {
         operatorDisplay.textContent = 'x';
       } else {
         operatorDisplay.textContent = operator;
@@ -176,8 +177,23 @@ function backspace() {
   }
 }
 
+// call the correct functions when a key is pressed
+function keyPress(event) {
+  if (event.key === '.' || Number(event.key) || event.key === '0'){
+    updateNumberDisplay(event);
+  } else if (event.key === '+' || event.key === '-' || event.key === '/' || event.key === '*') {
+    updateOperator(event);
+  } else if(event.key === 'Enter') {
+    event.preventDefault();
+    startOperate();
+  } else if(event.key === 'Backspace') {
+    backspace()
+  }
+}
+
 numbersContainer.addEventListener('click', updateNumberDisplay);
 operatorsContainer.addEventListener('click', updateOperator);
 equalButton.addEventListener('click', startOperate);
 clearButton.addEventListener('click', clear);
 backspaceButton.addEventListener('click', backspace);
+body.addEventListener('keydown', keyPress);
