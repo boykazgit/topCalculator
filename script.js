@@ -168,7 +168,11 @@ function clear() {
 
 function backspace() {
   if(numbersDisplay.textContent !== '') {
-    numbersDisplay.textContent = numbersDisplay.textContent.slice(0,-1);
+    if(numbersDisplay.textContent === 'NaN' || numbersDisplay.textContent === 'Infinity') {
+      numbersDisplay.textContent = '';
+    } else {
+      numbersDisplay.textContent = numbersDisplay.textContent.slice(0,-1);
+    }
   }
 }
 
@@ -177,4 +181,3 @@ operatorsContainer.addEventListener('click', updateOperator);
 equalButton.addEventListener('click', startOperate);
 clearButton.addEventListener('click', clear);
 backspaceButton.addEventListener('click', backspace);
-
