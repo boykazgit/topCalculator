@@ -141,6 +141,10 @@ function startOperate() {
       numbersDisplay.textContent = '';
       operatorDisplay.textContent = '';
       result = operate();
+      if (result.toString().length > 15) {
+        result = (+operate()).toPrecision(15);
+      }
+
       eqlButnOperate = 1;
       operator = '';
       userNumber1 = '';
@@ -173,3 +177,4 @@ operatorsContainer.addEventListener('click', updateOperator);
 equalButton.addEventListener('click', startOperate);
 clearButton.addEventListener('click', clear);
 backspaceButton.addEventListener('click', backspace);
+
