@@ -104,7 +104,9 @@ function updateOperator(event) {
           return;
         } else {
           event.type === 'click' ? tempOpr = event.target.id : tempOpr = event.key;
-          userNumber2 = numbersDisplay.textContent;
+          if(Number(numbersDisplay.textContent)) {
+            userNumber2 = numbersDisplay.textContent;
+          } else return;
           numbersDisplay.textContent = '';
           operatorDisplay.textContent = '';
           result = operate();
@@ -118,7 +120,9 @@ function updateOperator(event) {
       }
   
       //default behaviour
-      userNumber1 = numbersDisplay.textContent;
+      if(Number(numbersDisplay.textContent)) {
+        userNumber1 = numbersDisplay.textContent;
+      } else return;
       numbersDisplay.textContent = '';
       event.type === 'click' ? operator = event.target.id : operator = event.key;
       if (event.target.id === '*' || event.key === '*') {
