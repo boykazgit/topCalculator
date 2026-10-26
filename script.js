@@ -103,7 +103,7 @@ function updateOperator(event) {
           event.type === 'click' ? operator = event.target.id : operator = event.key;
           return;
         } else {
-          tempOpr = event.target.id;
+          event.type === 'click' ? tempOpr = event.target.id : tempOpr = event.key;
           userNumber2 = numbersDisplay.textContent;
           numbersDisplay.textContent = '';
           operatorDisplay.textContent = '';
