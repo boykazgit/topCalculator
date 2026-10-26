@@ -50,6 +50,15 @@ function operate() {
 }
 
 function updateNumberDisplay(event) {
+  if(event.target.id === 'change-sign') {
+    if(numbersDisplay.textContent !== '') {
+      if(numbersDisplay.textContent[0] === '-') {
+        numbersDisplay.textContent = numbersDisplay.textContent.slice(1);
+      }else {
+        numbersDisplay.textContent = '-' + numbersDisplay.textContent;
+      }
+    }
+  } else {
     //update number 1 only when userNumber 1 is not already assigned
     if (numbersDisplay.textContent.length > 15) {
       alert('Maximum numbers of digits reached(15)');
@@ -79,6 +88,7 @@ function updateNumberDisplay(event) {
       }
     }
   }
+}
 
 function updateOperator(event) {
   if (!(event.target.id === '=' || event.target.id === 'clear' || event.target.id === 'backspace')) {
